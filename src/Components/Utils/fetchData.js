@@ -5,12 +5,15 @@ const fetchData = async (after) => {
     );
     const { data } = await response.json();
     const fetchedPosts = data.children.map(
-      ({ data: { id, author, url, subreddit_name_prefixed, title } }) => ({
+      ({
+        data: { id, author, url, subreddit_name_prefixed, title, permalink },
+      }) => ({
         id,
         author,
-        url,
+        img: url,
         subreddit: subreddit_name_prefixed,
         title,
+        link: permalink,
       })
     );
     return { posts: fetchedPosts, next: data.after };

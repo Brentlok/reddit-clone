@@ -27,9 +27,9 @@ const Posts = () => {
   }, []);
 
   return (
-    <main className="p-5">
+    <main className="px-52 py-5 m-auto">
       {postsList.map(({ id, ...props }) =>
-        /\.(jpg|gif|png)$/.test(props.url) ? <Post key={id} {...props} /> : null
+        /\.(jpg|gif|png)$/.test(props.img) ? <Post key={id} {...props} /> : null
       )}
     </main>
   );
