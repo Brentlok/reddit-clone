@@ -1,18 +1,34 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const SearchBar = () => {
   const inputRef = useRef();
   const [inputFocused, setInputFocused] = useState(false);
-  const [inputValue, setInputValue] = useState('');
   const [active, setActive] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+
+  const params = useParams();
+
+  useEffect(() => {
+    setInputValue(params['*']);
+  }, [params]);
+
+  const navigate = useNavigate();
 
   const handleChange = ({ target }) => {
     const { value } = target;
     setInputValue(value);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const sub = e.target[0].value;
+    navigate('/' + sub);
+  };
+
   return (
     <form
+      onSubmit={handleSubmit}
       onMouseEnter={() => setActive(true)}
       onMouseLeave={() => !inputFocused && setActive(false)}
       onClick={() => {
@@ -42,6 +58,7 @@ const SearchBar = () => {
       </svg>
 
       <input
+        value={inputValue}
         ref={inputRef}
         onFocus={() => {
           setActive(true);

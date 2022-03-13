@@ -1,8 +1,9 @@
-const fetchData = async (after) => {
+const fetchData = async (after, sub = '') => {
   try {
-    const response = await fetch(
-      `https://www.reddit.com/new.json?after=${after}`
-    );
+    const URL = `https://www.reddit.com/${
+      sub && `r/${sub}/`
+    }new.json?after=${after}`;
+    const response = await fetch(URL);
     const { data } = await response.json();
     const fetchedPosts = data.children.map(
       ({
